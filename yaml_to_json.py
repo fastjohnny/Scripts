@@ -8,6 +8,6 @@ args = parser.parse_args()
 with open(args.source, 'r') as stream:
     try:
         with open(args.dest, 'w') as outfile:
-            json.dump(yaml.load(stream), outfile)
+            json.dump(yaml.load(stream), outfile, indent=4, sort_keys=True)
     except yaml.YAMLError as exc:
         print(exc)

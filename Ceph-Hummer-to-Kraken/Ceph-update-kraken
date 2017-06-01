@@ -1,0 +1,21 @@
+
+mkdir -p ceph_upgrade/apt-lists/
+mv /etc/apt/sources.list.d/mos* ceph_upgrade/apt-lists/
+apt update
+apt install python-pip
+pip install --upgrade pip
+apt remove -y ceph-deploy
+wget -q -O- 'https://download.ceph.com/keys/release.asc' | sudo apt-key add -
+apt update
+env DEBIAN_FRONTEND=noninteractive DEBIAN_PRIORITY=critical apt-get --assume-yes -q --no-install-recommends install -o Dpkg::Options::=--force-confnew ceph ceph-osd ceph-mds ceph-mon radosgw
+mv ceph_upgrade/apt-lists/* /etc/apt/sources.list.d/
+apt update
+apt install ceph-deploy
+pip install -U ceph-deploy
+chown -R ceph:ceph /var/lib/ceph/
+restart ceph-all
+ceph osd crush tunables optimal
+
+
+>All clusters must first be upgraded to Jewel 10.2.z before upgrading to Kraken 11.2.z (or, eventually, Luminous 12.2.z).
+>The sortbitwise flag must be set on the Jewel cluster before upgrading to Kraken. The latest Jewel (10.2.4+) releases issue a health warning if the flag is not set, so this is probably already set. If it is not, Kraken OSDs will refuse to start and will print and error message in their log.

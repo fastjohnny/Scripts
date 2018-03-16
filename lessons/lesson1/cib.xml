@@ -1,0 +1,15 @@
+node 1: ubuntu-pcm-3
+node 2: ubuntu-pcm-1
+node 3: ubuntu-pcm-2
+primitive VIP IPaddr2 \
+        params ip=10.1.46.30 cidr_netmask=24 nic=ens3 \
+        op monitor interval=30s timeout=40 \
+        op start interval=0s timeout=60 \
+        op stop interval=0s timeout=60
+property cib-bootstrap-options: \
+        have-watchdog=false \
+        dc-version=1.1.14-70404b0 \
+        cluster-infrastructure=corosync \
+        cluster-name=debian \
+        stonith-enabled=false \
+        last-lrm-refresh=1521195821

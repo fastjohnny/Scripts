@@ -1,0 +1,7 @@
+user: root
+file_roots:
+  base:
+    - /opt/salt_ssh/states
+pillar_roots:
+  base:
+    - /opt/salt_ssh/pillar

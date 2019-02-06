@@ -1,0 +1,16 @@
+vm2:
+  host: 10.1.46.28
+  user: root
+  priv: /root/.ssh/id_rsa
+  sudo: True
+  minion_opts:
+    sudo_user:
+      user: ubuntu
+vm3:
+  host: 10.1.46.29
+  user: root
+  priv: /root/.ssh/id_rsa
+  sudo: True
+  minion_opts:
+    sudo_user:
+      user: ubuntu

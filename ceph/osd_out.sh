@@ -1,4 +1,5 @@
 #!/bin/bash
+#Ver 0.2
 set -x
 PGS_COUNT='4544'
 LOG='/var/log/ceph_out.log'
@@ -32,10 +33,12 @@ DAY=`date +%u` #In 1-7 format
   while true
     do sleep 15
     ceph -s >> $LOG
+    date +%H:%M:%S >> $LOG
     clean=`ceph -s |grep 'active+clean' | awk '{print $1}'`
     echo "Clean PG $clean vs all PG $PGS_COUNT" >> $LOG
     if [[ $clean == $PGS_COUNT ]]; then 
       echo 'done' >> $LOG;
+      sleep 10;
       stop ceph-osd id=$osd 
       ceph osd crush rm osd.$osd
       ceph auth del osd.$osd

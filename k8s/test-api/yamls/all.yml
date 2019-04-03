@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: zbx-service
+  namespace: default
+  labels:
+    app: zbx
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  type: ClusterIP
+  selector:
+    app: zbx
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zabbix-tst
+  namespace: default
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: zbx-ingress
+  namespace: default
+spec:
+  rules:
+  - host: www.ngn.tst
+    http:
+      paths:
+      - backend:
+          serviceName: zbx-service
+          servicePort: 80
+        path: /
+

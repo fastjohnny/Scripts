@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: zbx-ingress
+  namespace: default
+spec:
+  rules:
+  - host: www.ngn.s7
+    http:
+      paths:
+      - backend:
+          serviceName: zbx-service 
+          servicePort: 80
+        path: /
